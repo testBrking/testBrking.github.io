@@ -2,218 +2,222 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pentest Notes - Hacker's Terminal</title>
+  <title>Pentest Notes - Professional Hacker UI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Hacker terminal style: Mononoki font, green/black, scanlines, glow -->
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <!-- Professional hacker style: Fira Mono, dark gray, minimal accent, clean -->
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      background: #0d0d0d;
-      color: #00ff41;
-      font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+    :root {
+      --bg-main: #181a1b;
+      --bg-panel: #232526;
+      --border: #23292e;
+      --accent: #3ecf8e;
+      --accent-fade: #3ecf8e30;
+      --text-main: #e6e6e6;
+      --text-muted: #8a8a8a;
+      --danger: #e05a47;
+      --danger-fade: #e05a4730;
+      --input-bg: #232526;
+      --input-border: #2e3338;
+      --input-focus: #3ecf8e;
+      --shadow: 0 2px 16px #000a;
+    }
+    html, body {
+      background: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Fira Mono', monospace;
       margin: 0;
       padding: 0;
       min-height: 100vh;
-      /* Subtle scanlines */
-      background-image: repeating-linear-gradient(
-        to bottom,
-        rgba(0,255,65,0.03) 0px,
-        rgba(0,255,65,0.03) 1px,
-        transparent 1px,
-        transparent 4px
-      );
     }
     .terminal-frame {
-      max-width: 900px;
+      max-width: 700px;
       margin: 48px auto;
-      background: rgba(10, 20, 10, 0.98);
-      border-radius: 10px;
-      box-shadow: 0 0 32px #00ff4160, 0 0 0 2px #00ff41;
-      border: 2px solid #00ff41;
+      background: var(--bg-panel);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      border: 1.5px solid var(--border);
       padding: 0;
       overflow: hidden;
       position: relative;
     }
     .terminal-header {
-      background: #111;
-      color: #00ff41;
-      padding: 10px 18px;
-      font-size: 1.1em;
-      letter-spacing: 2px;
-      border-bottom: 1.5px solid #00ff41;
+      background: #1b1d1e;
+      color: var(--accent);
+      padding: 12px 22px;
+      font-size: 1.08em;
+      letter-spacing: 1.5px;
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       gap: 10px;
       user-select: none;
+      font-weight: 700;
     }
     .terminal-header .led {
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      margin-right: 6px;
-      background: #00ff41;
-      box-shadow: 0 0 8px #00ff41, 0 0 2px #fff;
-      animation: blink 1.2s infinite alternate;
-    }
-    @keyframes blink {
-      0% { opacity: 1; }
-      100% { opacity: 0.5; }
+      margin-right: 8px;
+      background: var(--accent);
+      box-shadow: 0 0 6px var(--accent-fade);
+      opacity: 0.7;
     }
     .terminal-body {
-      padding: 32px 28px 24px 28px;
-      min-height: 600px;
+      padding: 28px 24px 20px 24px;
+      min-height: 500px;
     }
     h1, h2, h3 {
-      color: #00ff41;
-      text-shadow: 0 0 8px #00ff41, 0 0 2px #fff;
+      color: var(--accent);
       font-weight: 700;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       margin-top: 0;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
+      text-shadow: none;
     }
     h1 {
-      font-size: 2.1em;
-      margin-bottom: 8px;
+      font-size: 1.7em;
+      margin-bottom: 6px;
     }
     a {
-      color: #00ff41;
+      color: var(--accent);
       text-decoration: underline;
       transition: color 0.2s;
     }
     a:hover {
-      color: #fff;
+      color: var(--text-main);
     }
     .prompt {
-      color: #fff;
+      color: var(--accent);
       font-weight: bold;
       margin-right: 6px;
-      text-shadow: 0 0 4px #00ff41;
+      text-shadow: none;
     }
     .section {
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
     pre, code {
-      background: #101c10;
-      color: #00ff41;
-      border-radius: 6px;
-      padding: 10px 14px;
-      font-size: 1.08em;
-      margin: 18px 0;
-      box-shadow: 0 0 8px #00ff4130;
-      border: 1px solid #00ff41;
+      background: #202324;
+      color: var(--accent);
+      border-radius: 5px;
+      padding: 8px 12px;
+      font-size: 1em;
+      margin: 14px 0;
+      box-shadow: none;
+      border: 1px solid var(--border);
       overflow-x: auto;
       font-family: inherit;
-      text-shadow: 0 0 4px #00ff41;
+      text-shadow: none;
     }
     .note-list {
       list-style: none;
       padding: 0;
-      margin: 0 0 24px 0;
+      margin: 0 0 18px 0;
     }
     .note-list li {
-      background: #101c10;
-      margin-bottom: 10px;
-      padding: 12px 18px;
-      border-radius: 6px;
-      color: #00ff41;
-      font-size: 1.05em;
+      background: var(--bg-main);
+      margin-bottom: 8px;
+      padding: 10px 14px;
+      border-radius: 5px;
+      color: var(--text-main);
+      font-size: 1em;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border: 1px solid #00ff41;
-      box-shadow: 0 0 8px #00ff4130;
-      transition: background 0.2s;
+      border: 1px solid var(--border);
+      box-shadow: none;
+      transition: background 0.18s;
       position: relative;
     }
     .note-list li .delete-btn {
       background: none;
       border: none;
-      color: #ff5555;
-      font-size: 1.2em;
+      color: var(--danger);
+      font-size: 1.1em;
       cursor: pointer;
-      margin-left: 16px;
-      transition: color 0.2s, text-shadow 0.2s;
-      text-shadow: 0 0 6px #ff5555;
+      margin-left: 14px;
+      transition: color 0.2s;
+      padding: 2px 6px;
+      border-radius: 3px;
     }
     .note-list li .delete-btn:hover {
+      background: var(--danger-fade);
       color: #fff;
-      text-shadow: 0 0 12px #ff5555;
     }
     .add-note-form {
       display: flex;
-      gap: 12px;
-      margin-bottom: 24px;
+      gap: 10px;
+      margin-bottom: 18px;
       align-items: flex-start;
       flex-wrap: wrap;
     }
     .add-note-form input, .add-note-form textarea {
-      background: #101c10;
-      color: #00ff41;
-      border: 1.5px solid #00ff41;
-      border-radius: 6px;
-      padding: 8px 10px;
+      background: var(--input-bg);
+      color: var(--text-main);
+      border: 1.2px solid var(--input-border);
+      border-radius: 5px;
+      padding: 7px 9px;
       font-family: inherit;
       font-size: 1em;
       outline: none;
-      box-shadow: 0 0 6px #00ff4130;
-      transition: border 0.2s, box-shadow 0.2s;
+      box-shadow: none;
+      transition: border 0.18s, box-shadow 0.18s;
       resize: vertical;
     }
     .add-note-form input:focus, .add-note-form textarea:focus {
-      border: 2px solid #fff;
-      box-shadow: 0 0 12px #00ff41;
-      background: #181f18;
+      border: 1.5px solid var(--input-focus);
+      background: #232b25;
     }
     .add-note-form button {
-      background: #00ff41;
-      color: #101c10;
+      background: var(--accent);
+      color: #181a1b;
       border: none;
-      border-radius: 6px;
-      padding: 10px 22px;
+      border-radius: 5px;
+      padding: 8px 18px;
       font-size: 1em;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 0 8px #00ff41, 0 0 2px #fff;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      text-shadow: 0 0 4px #fff;
+      box-shadow: none;
+      transition: background 0.18s, color 0.18s;
       margin-top: 2px;
+      letter-spacing: 1px;
     }
     .add-note-form button:hover {
-      background: #181f18;
-      color: #00ff41;
-      box-shadow: 0 0 16px #00ff41;
+      background: #2fa36b;
+      color: #fff;
     }
     .footer {
       text-align: center;
-      margin-top: 30px;
-      color: #00ff41a0;
-      font-size: 1em;
+      margin-top: 24px;
+      color: var(--text-muted);
+      font-size: 0.98em;
       letter-spacing: 1px;
-      text-shadow: 0 0 4px #00ff41;
-      border-top: 1px solid #00ff41;
-      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
     }
     /* Terminal cursor effect */
     .terminal-cursor {
       display: inline-block;
-      width: 10px;
-      height: 1.2em;
-      background: #00ff41;
+      width: 8px;
+      height: 1.1em;
+      background: var(--accent);
       margin-left: 2px;
       animation: blink-cursor 1s steps(1) infinite;
       vertical-align: middle;
+      border-radius: 1px;
+      opacity: 0.7;
     }
     @keyframes blink-cursor {
-      0%, 50% { opacity: 1; }
+      0%, 50% { opacity: 0.7; }
       51%, 100% { opacity: 0; }
     }
     /* Scrollbar styling */
     ::-webkit-scrollbar {
       width: 8px;
-      background: #101c10;
+      background: var(--bg-panel);
     }
     ::-webkit-scrollbar-thumb {
-      background: #00ff41;
+      background: var(--accent-fade);
       border-radius: 4px;
     }
     /* Responsive */
@@ -223,11 +227,11 @@
         min-width: 0;
       }
       .terminal-body {
-        padding: 18px 6px 12px 6px;
+        padding: 14px 4px 8px 4px;
       }
       .add-note-form {
         flex-direction: column;
-        gap: 8px;
+        gap: 7px;
       }
     }
   </style>
@@ -236,11 +240,11 @@
   <div class="terminal-frame">
     <div class="terminal-header">
       <span class="led"></span>
-      <span>Pentest@Hacker:~$ <span class="terminal-cursor"></span></span>
+      <span>Pentest@notebook:~$ <span class="terminal-cursor"></span></span>
     </div>
     <div class="terminal-body">
-      <h1>💀 Pentest Notes Terminal</h1>
-      <p><span class="prompt">[root@notebook]</span> Welcome, <span style="color:#fff;">operator</span>. This is your <strong>hacker-grade</strong> pentest notebook. Log findings, commands, payloads, and tips. <span style="color:#fff;">Your arsenal, your rules.</span></p>
+      <h1>Pentest Notes</h1>
+      <p><span class="prompt">[root@notebook]</span> Welcome, <span style="color:var(--text-main);">operator</span>. This is your <strong>professional</strong> pentest notebook. Log findings, commands, payloads, and tips. <span style="color:var(--text-main);">Stay organized.</span></p>
       
       <div class="section">
         <h2>Quick Commands</h2>
@@ -274,12 +278,12 @@ $ sqlmap -u "http://target.com/index.php?id=1" --batch --dbs
       </div>
       
       <div class="footer">
-        &copy; 2024 <span style="color:#fff;">Hacker's Terminal</span> &mdash; <span style="color:#fff;">Stay sharp, stay invisible.</span>
+        &copy; 2024 <span style="color:var(--text-main);">Professional Hacker UI</span> &mdash; <span style="color:var(--text-main);">Stay sharp.</span>
       </div>
     </div>
   </div>
   <script>
-    // Terminal-style localStorage-powered notes
+    // Professional localStorage-powered notes
     const noteList = document.getElementById('noteList');
     const addNoteForm = document.getElementById('addNoteForm');
     const noteTitle = document.getElementById('noteTitle');
@@ -301,12 +305,12 @@ $ sqlmap -u "http://target.com/index.php?id=1" --batch --dbs
       noteList.innerHTML = '';
       const notes = JSON.parse(localStorage.getItem('pentestNotes') || '[]');
       if (notes.length === 0) {
-        noteList.innerHTML = `<li style="opacity:0.6;">No notes yet. Add your first finding!</li>`;
+        noteList.innerHTML = `<li style="opacity:0.5;color:var(--text-muted);">No notes yet. Add your first finding.</li>`;
         return;
       }
       notes.forEach((note, idx) => {
         const li = document.createElement('li');
-        li.innerHTML = `<span><span class="prompt">[${String(idx+1).padStart(2,'0')}]</span> <strong style="color:#fff;">${escapeHTML(note.title)}</strong>: <span style="color:#00ff41;">${escapeHTML(note.content)}</span></span>
+        li.innerHTML = `<span><span class="prompt">[${String(idx+1).padStart(2,'0')}]</span> <strong style="color:var(--text-main);">${escapeHTML(note.title)}</strong>: <span style="color:var(--accent);">${escapeHTML(note.content)}</span></span>
           <button class="delete-btn" title="Delete" onclick="deleteNote(${idx})">&#10006;</button>`;
         noteList.appendChild(li);
       });
@@ -342,7 +346,7 @@ $ sqlmap -u "http://target.com/index.php?id=1" --batch --dbs
     // Load notes on page load
     loadNotes();
 
-    // Optional: Keyboard shortcut to focus note input (Ctrl+N)
+    // Keyboard shortcut to focus note input (Ctrl+N)
     document.addEventListener('keydown', function(e) {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'n') {
         e.preventDefault();

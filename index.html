@@ -8,19 +8,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-main: #181a1b;
-      --bg-panel: #232526;
-      --border: #23292e;
-      --accent: #3ecf8e;
-      --accent-fade: #3ecf8e30;
-      --text-main: #e6e6e6;
-      --text-muted: #8a8a8a;
+      --bg-main: #fff;
+      --bg-panel: #f5f7fa;
+      --border: #dbe2ea;
+      --accent: #2563eb;
+      --accent-fade: #2563eb30;
+      --text-main: #222e3a;
+      --text-muted: #7a869a;
       --danger: #e05a47;
       --danger-fade: #e05a4730;
-      --input-bg: #232526;
-      --input-border: #2e3338;
-      --input-focus: #3ecf8e;
-      --shadow: 0 2px 16px #000a;
+      --input-bg: #f5f7fa;
+      --input-border: #dbe2ea;
+      --input-focus: #2563eb;
+      --shadow: 0 2px 16px #0001;
+      --cmd-bg: #e8f0fe;
+      --cmd-prompt: #2563eb;
+      --cmd-arg: #0d9488;
+      --cmd-url: #b91c1c;
+      --cmd-opt: #7c3aed;
+      --cmd-str: #059669;
     }
     html, body {
       background: var(--bg-main);
@@ -32,7 +38,6 @@
       width: 100vw;
       box-sizing: border-box;
     }
-    /* Remove centering and make the terminal frame full width/height */
     .terminal-frame {
       width: 100vw;
       min-height: 100vh;
@@ -48,7 +53,7 @@
       flex-direction: column;
     }
     .terminal-header {
-      background: #1b1d1e;
+      background: #e0e7ef;
       color: var(--accent);
       padding: 18px 32px;
       font-size: 1.15em;
@@ -114,7 +119,7 @@
       max-width: 1200px;
     }
     pre, code {
-      background: #202324;
+      background: var(--cmd-bg);
       color: var(--accent);
       border-radius: 5px;
       padding: 10px 16px;
@@ -125,6 +130,42 @@
       overflow-x: auto;
       font-family: inherit;
       text-shadow: none;
+    }
+    .quick-commands {
+      background: var(--cmd-bg);
+      border-radius: 7px;
+      border: 1.5px solid var(--border);
+      padding: 18px 20px;
+      margin: 16px 0;
+      font-size: 1.05em;
+      overflow-x: auto;
+    }
+    .quick-commands .cmd-line {
+      display: block;
+      margin-bottom: 8px;
+      font-family: inherit;
+      white-space: pre;
+    }
+    .quick-commands .cmd-line:last-child {
+      margin-bottom: 0;
+    }
+    .cmd-prompt {
+      color: var(--cmd-prompt);
+      font-weight: bold;
+    }
+    .cmd-tool {
+      color: var(--cmd-arg);
+      font-weight: bold;
+    }
+    .cmd-opt {
+      color: var(--cmd-opt);
+    }
+    .cmd-url {
+      color: var(--cmd-url);
+      text-decoration: underline;
+    }
+    .cmd-str {
+      color: var(--cmd-str);
     }
     .note-list {
       list-style: none;
@@ -194,11 +235,11 @@
     }
     .add-note-form input:focus, .add-note-form textarea:focus {
       border: 1.5px solid var(--input-focus);
-      background: #232b25;
+      background: #e0e7ef;
     }
     .add-note-form button {
       background: var(--accent);
-      color: #181a1b;
+      color: #fff;
       border: none;
       border-radius: 5px;
       padding: 10px 22px;
@@ -211,7 +252,7 @@
       letter-spacing: 1px;
     }
     .add-note-form button:hover {
-      background: #2fa36b;
+      background: #1746a2;
       color: #fff;
     }
     .footer {
@@ -224,7 +265,6 @@
       padding-top: 14px;
       width: 100%;
     }
-    /* Terminal cursor effect */
     .terminal-cursor {
       display: inline-block;
       width: 8px;
@@ -240,7 +280,6 @@
       0%, 50% { opacity: 0.7; }
       51%, 100% { opacity: 0; }
     }
-    /* Scrollbar styling */
     ::-webkit-scrollbar {
       width: 8px;
       background: var(--bg-panel);
@@ -249,7 +288,6 @@
       background: var(--accent-fade);
       border-radius: 4px;
     }
-    /* Responsive */
     @media (max-width: 900px) {
       .terminal-body {
         padding: 24px 2vw 16px 2vw;
@@ -287,16 +325,17 @@
     </div>
     <div class="terminal-body">
       <h1>Pentest Notes</h1>
-      <p><span class="prompt">[root@notebook]</span> Welcome, <span style="color:var(--text-main);">operator</span>. This is your <strong>professional</strong> pentest notebook. Log findings, commands, payloads, and tips. <span style="color:var(--text-main);">Stay organized.</span></p>
+      <p><span class="prompt" style="color:var(--accent);">[root@notebook]</span> Welcome, <span style="color:var(--accent);">operator</span>. This is your <strong>professional</strong> pentest notebook. Log findings, commands, payloads, and tips. <span style="color:var(--accent);">Stay organized.</span></p>
       
       <div class="section">
         <h2>Quick Commands</h2>
-        <pre><code>$ nmap -A -T4 target.com
-$ gobuster dir -u http://target.com -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
-$ wfuzz -c -w wordlist.txt --hc 404 http://target.com/FUZZ
-$ curl -I http://target.com
-$ sqlmap -u "http://target.com/index.php?id=1" --batch --dbs
-</code></pre>
+        <div class="quick-commands">
+          <span class="cmd-line"><span class="cmd-prompt">$</span> <span class="cmd-tool">nmap</span> <span class="cmd-opt">-A -T4</span> <span class="cmd-url">target.com</span></span>
+          <span class="cmd-line"><span class="cmd-prompt">$</span> <span class="cmd-tool">gobuster</span> <span class="cmd-arg">dir</span> <span class="cmd-opt">-u</span> <span class="cmd-url">http://target.com</span> <span class="cmd-opt">-w</span> <span class="cmd-str">/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span></span>
+          <span class="cmd-line"><span class="cmd-prompt">$</span> <span class="cmd-tool">wfuzz</span> <span class="cmd-opt">-c -w</span> <span class="cmd-str">wordlist.txt</span> <span class="cmd-opt">--hc 404</span> <span class="cmd-url">http://target.com/FUZZ</span></span>
+          <span class="cmd-line"><span class="cmd-prompt">$</span> <span class="cmd-tool">curl</span> <span class="cmd-opt">-I</span> <span class="cmd-url">http://target.com</span></span>
+          <span class="cmd-line"><span class="cmd-prompt">$</span> <span class="cmd-tool">sqlmap</span> <span class="cmd-opt">-u</span> <span class="cmd-str">"http://target.com/index.php?id=1"</span> <span class="cmd-opt">--batch --dbs</span></span>
+        </div>
       </div>
       
       <div class="section">
@@ -312,16 +351,16 @@ $ sqlmap -u "http://target.com/index.php?id=1" --batch --dbs
       <div class="section">
         <h2>Tips</h2>
         <ul>
-          <li><span class="prompt">[+]</span> Use <code>tmux</code> or <code>screen</code> for multitasking.</li>
-          <li><span class="prompt">[+]</span> Keep payloads and wordlists handy.</li>
-          <li><span class="prompt">[+]</span> Document every step for reproducibility.</li>
-          <li><span class="prompt">[+]</span> Encrypt sensitive notes.</li>
-          <li><span class="prompt">[+]</span> Use <code>grep</code>, <code>awk</code>, <code>jq</code> for fast parsing.</li>
+          <li><span class="prompt" style="color:var(--accent);">[+]</span> Use <code>tmux</code> or <code>screen</code> for multitasking.</li>
+          <li><span class="prompt" style="color:var(--accent);">[+]</span> Keep payloads and wordlists handy.</li>
+          <li><span class="prompt" style="color:var(--accent);">[+]</span> Document every step for reproducibility.</li>
+          <li><span class="prompt" style="color:var(--accent);">[+]</span> Encrypt sensitive notes.</li>
+          <li><span class="prompt" style="color:var(--accent);">[+]</span> Use <code>grep</code>, <code>awk</code>, <code>jq</code> for fast parsing.</li>
         </ul>
       </div>
       
       <div class="footer">
-        &copy; 2024 <span style="color:var(--text-main);">Professional Hacker UI</span> &mdash; <span style="color:var(--text-main);">Stay sharp.</span>
+        &copy; 2024 <span style="color:var(--accent);">Professional Hacker UI</span> &mdash; <span style="color:var(--accent);">Stay sharp.</span>
       </div>
     </div>
   </div>
@@ -353,7 +392,7 @@ $ sqlmap -u "http://target.com/index.php?id=1" --batch --dbs
       }
       notes.forEach((note, idx) => {
         const li = document.createElement('li');
-        li.innerHTML = `<span><span class="prompt">[${String(idx+1).padStart(2,'0')}]</span> <strong style="color:var(--text-main);">${escapeHTML(note.title)}</strong>: <span style="color:var(--accent);">${escapeHTML(note.content)}</span></span>
+        li.innerHTML = `<span><span class="prompt" style="color:var(--accent);">[${String(idx+1).padStart(2,'0')}]</span> <strong style="color:var(--accent);">${escapeHTML(note.title)}</strong>: <span style="color:var(--cmd-tool);">${escapeHTML(note.content)}</span></span>
           <button class="delete-btn" title="Delete" onclick="deleteNote(${idx})">&#10006;</button>`;
         noteList.appendChild(li);
       });

